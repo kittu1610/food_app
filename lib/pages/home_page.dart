@@ -11,13 +11,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Map> foodList = <Map>[];
 
-  gotoAddFoodPage(BuildContext context) {
-    Navigator.push(
+  gotoAddFoodPage(BuildContext context) async {
+    Map food = await Navigator.push(
       context,
       MaterialPageRoute<void>(
         builder: (BuildContext context) => const AddFoodPage(),
       ),
-    );
+    ) as Map;
+    setState(() {
+      foodList.add(food);
+    });
   }
 
   @override
@@ -35,7 +38,33 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 24),
               ),
             )
-          : const Text(""),
+          : Column(
+              children: List.generate(
+                foodList.length,
+                (index) => Card(
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      title: Text(
+                        "Food Name: ${foodList.elementAt(index)["foodName"]}",
+                      ),
+                      subtitle: Text(
+                        "Food Price: ${foodList.elementAt(index)["foodPrice"]}",
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            foodList.removeAt(index);
+                          });
+                        },
+                        icon: const Icon(Icons.delete),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => gotoAddFoodPage(context),
         child: const Icon(Icons.add),
