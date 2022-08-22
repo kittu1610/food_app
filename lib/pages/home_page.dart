@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/pages/add_food_page.dart';
+import 'package:food_app/pages/food_info_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,6 +22,17 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       foodList.add(food);
     });
+  }
+
+  gotoFoodInfoPage(BuildContext context, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => FoodInfoPage(
+          food: foodList.elementAt(index),
+        ),
+      ),
+    );
   }
 
   @override
@@ -60,6 +72,7 @@ class _HomePageState extends State<HomePage> {
                         },
                         icon: const Icon(Icons.delete),
                       ),
+                      onTap: () => gotoFoodInfoPage(context, index),
                     ),
                   ),
                 ),
