@@ -8,6 +8,24 @@ class AddFoodPage extends StatefulWidget {
 }
 
 class _AddFoodPageState extends State<AddFoodPage> {
+  Map food = {};
+
+  TextEditingController foodName = TextEditingController();
+  TextEditingController foodPrice = TextEditingController();
+  TextEditingController foodImageUrl = TextEditingController();
+  TextEditingController foodDesc = TextEditingController();
+
+  addFood(BuildContext context) {
+    food = {
+      "foodName": foodName.text,
+      "foodPrice": foodPrice.text,
+      "foodImageUrl": foodImageUrl.text,
+      "foodDesc": foodDesc.text
+    };
+    print(food);
+    Navigator.pop(context, food);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,40 +34,44 @@ class _AddFoodPageState extends State<AddFoodPage> {
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
-              decoration: InputDecoration(
+              controller: foodName,
+              decoration: const InputDecoration(
                 label: Text("Food Name"),
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
-              decoration: InputDecoration(
+              controller: foodPrice,
+              decoration: const InputDecoration(
                 label: Text("Food Price"),
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
-              decoration: InputDecoration(
+              controller: foodImageUrl,
+              decoration: const InputDecoration(
                 label: Text("Food Image Url"),
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
-              decoration: InputDecoration(
+              controller: foodDesc,
+              decoration: const InputDecoration(
                 label: Text("Food Description"),
               ),
             ),
           ),
           ElevatedButton(
-            onPressed: () => {},
+            onPressed: () => addFood(context),
             child: const Text("Add Food"),
           )
         ],
